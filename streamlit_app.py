@@ -1,23 +1,6 @@
 import pandas as pd
-import requests
 import streamlit as st
-
-source = "https://www.ined.fr/fr/tout-savoir-population/jeux/population-demain/"
-backend = "https://www.ined.fr/_modules/SimulateurPopulation/query.php"
-
-
-def get_zones():
-    response = requests.get(backend, params={"query": "getZones", "params": "{}"})
-    return pd.DataFrame.from_records(response.json())[["pays_id", "pays_nom_fr"]]
-
-def get_countries():
-    response = requests.get(backend, params={"query": "getPays_fr", "params": "{}"})
-    return pd.DataFrame.from_records(response.json())[["pays_id", "pays_nom_fr"]]
-
-def get_data(id):
-    response = requests.get(backend, params={"query": "getDataForZoneSim", "params": f'{{"id": "{id}"}}'})
-    print(response.url)
-    return pd.DataFrame.from_records(response.json())
+from backend import get_zones, get_countries, get_data
 
 st.header("INED")
 
